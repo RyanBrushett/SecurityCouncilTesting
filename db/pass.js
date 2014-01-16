@@ -1,5 +1,6 @@
-    // Lifted this from the express samples
-    // Pretty basic hash/salt function and works like a charm
+/* Robbed this from the Express samples but it doesn't actually
+   use any express libraries. BEAUTY.
+*/
 var crypto = require('crypto');
 var len = 128;
 var iterations = 12000;
@@ -36,7 +37,10 @@ exports.auth = function authenticate(name, pass, fn) {
    });
 }
 
-/*
+/* Not sure this will work without express, however. This is
+   from another express example for restriction access to
+   certain functions. I believe we can make it work.
+*/
     // Restrict a section of the app by session
 exports.restrict = function restrict(req, res, next) {
    if (req.session.user) {
