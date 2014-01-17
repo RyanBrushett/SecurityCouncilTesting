@@ -11,8 +11,16 @@
 var fs   = require('fs');
 var util = require('util');
 var url  = require('url');
+var path = require('path');
 /* This is the directory views are stored in */
 var view = './app/view/';
+
+/* We use these to handle static files */
+var contentTypes = {
+    '.html':'text/html',
+    '.css' :'text/css',
+    '.js'  :'application/javascript'
+};
 
 /* I have a header file so that we don't need to constantly
    recreate a navbar and the HTML header. This way, when writing
@@ -51,6 +59,24 @@ function renderLogin(req,res){
     });
 }
 
+function staticFile(filename,req,res){
+    fs.readFile(filename,"binary",function(err,file){
+        if(err){
+            res.writeHead(500,{"Content-Type":"text/plain"});
+            res.write(err + "\n");
+            res.end();
+            return;
+        }
+        var headers = {};
+        var ct = contentTypes[path.extname(filename)];
+        if(ct){
+            headers["Content-Type"] = ct;
+        }
+        res.writeHead(200,headers);
+        res.write(file,"binary");
+        res.end();
+    });
+}
 /* These will be the handle functions for taking POST requests.
    So far I haven't finished this and it doesn't work. It's just
    here for notes. I don't believe I can use req.session without
@@ -74,3 +100,4 @@ function renderLogin(req,res){
 /* Need to export the functions */
 exports.renderHello = renderHello;
 exports.renderLogin = renderLogin;
+exports.staticFile  = staticFile;

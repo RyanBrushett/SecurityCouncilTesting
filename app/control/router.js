@@ -7,6 +7,8 @@
 */
 
 /* dispatcher.js and error.js are in this working dir*/
+var pathMod    = require("path");
+var fs         = require("fs");
 var dispatcher = require("./dispatcher");
 var error      = require("./error");
 
@@ -17,19 +19,26 @@ var error      = require("./error");
 */
 function route(path,req,res){
     console.log("About to route a request for " + path);
-    if (path == "" || path == "/" && req.method == "GET"){
-        dispatcher.renderHello(req,res);
-    }
-    else if (path == "/login" && req.method == "GET"){
-        dispatcher.renderLogin(req,res);
-    }
-    // Haven't done this part yet.
-    /*else if (path == "/login" && req.method == "POST"){
-        dispatcher.handleAuth(req,res);
-    }*/
-    else{
-        error.fourohfour(req,res);
-    }
+    var filename = pathMod.join(process.cwd(),path);
+    fs.exists(filename,function(exists){
+        if (path == "" || path == "/" || path == "/index.html" && req.method == "GET"){
+            dispatcher.renderHello(req,res);
+        }
+        else if (path == "/login" && req.method == "GET"){
+            dispatcher.renderLogin(req,res);
+        }
+        // Haven't done this part yet.
+        /*else if (path == "/login" && req.method == "POST"){
+            dispatcher.handleAuth(req,res);
+        }*/
+        else if (!exists){
+            error.fourohfour(req,res);
+        }
+            // If it gets all the way down here, it pretty much has to be a static file
+        else{
+            dispatcher.staticFile(filename,req,res);
+        }
+    });
 }
 
 /* Exporting the router */
