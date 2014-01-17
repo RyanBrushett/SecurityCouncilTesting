@@ -1,6 +1,6 @@
 Node.JS without Express
 =======================
 
-Working on a login page now
+Working on a login page in this branch
 
-Will then move the error handling from a foolish error.js to a proper error page
+Updated comments.
