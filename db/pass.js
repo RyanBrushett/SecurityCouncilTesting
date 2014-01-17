@@ -50,4 +50,3 @@ exports.restrict = function restrict(req, res, next) {
       res.redirect('/login');
    }
 }
-*/
