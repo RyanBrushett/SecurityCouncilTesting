@@ -7,6 +7,9 @@
    don't make use of in this file so I should remove it.
    URL is the url parser. I don't think I use that either.
    These are all built-in node utilities.
+   This dispatcher is getting huge, even without comments.
+   Might split it off into a GET dispatcher, POST dispatcher,
+   and problem dispatcher.
 */
 var fs   = require('fs');
 var util = require('util');
@@ -98,7 +101,17 @@ function staticFile(filename,req,res){
   });
 });*/
 
+/* Error handling functions
+ */
+function fourohfour(req,res){
+    console.log("404");
+    res.writeHead(404,{"content-type":"text/plain"});
+    res.write("404 page not found.");
+    res.end();
+}
+
 /* Need to export the functions */
 exports.renderHello = renderHello;
 exports.renderLogin = renderLogin;
 exports.staticFile  = staticFile;
+exports.fourohfour = fourohfour;

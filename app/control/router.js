@@ -10,7 +10,6 @@
 var pathMod    = require("path");
 var fs         = require("fs");
 var dispatcher = require("./dispatcher");
-var error      = require("./error");
 
 /* Here's our route function.
    Basically it takes the path, checks it against a bunch of conditions
@@ -32,7 +31,7 @@ function route(path,req,res){
             dispatcher.handleAuth(req,res);
         }*/
         else if (!exists){
-            error.fourohfour(req,res);
+            dispatcher.fourohfour(req,res);
         }
             // If it gets all the way down here, it pretty much has to be a static file
         else{
