@@ -77,6 +77,7 @@ function staticFile(filename,req,res){
         res.end();
     });
 }
+
 /* These will be the handle functions for taking POST requests.
    So far I haven't finished this and it doesn't work. It's just
    here for notes. I don't believe I can use req.session without

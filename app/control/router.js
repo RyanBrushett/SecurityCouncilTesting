@@ -21,7 +21,7 @@ function route(path,req,res){
     console.log("About to route a request for " + path);
     var filename = pathMod.join(process.cwd(),path);
     fs.exists(filename,function(exists){
-        if (path == "" || path == "/" || path == "/index.html" && req.method == "GET"){
+        if (path == "" || path == "/" && req.method == "GET"){
             dispatcher.renderHello(req,res);
         }
         else if (path == "/login" && req.method == "GET"){
